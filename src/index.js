@@ -1,15 +1,28 @@
-// import $ from 'jquery';
-// import { galacticCalc } from "../src/galactic-back-end.js";
-//
-//
-// $(document).ready(function(){
-//   $('#calendar').submit(function(event){
-//     event.preventDefault();
-//     let dob = $("#born").val();
-//
-//     $('.result').append(dob);
-//
-//
-//
-//   });
-// });
+import {DoctorData} from './api.js';
+import './css/styles.css';
+import $ from 'jquery';
+
+$(document).ready(function() {
+  $('.userForm').submit(function(event) {
+    event.preventDefault();
+
+    const issueType = $('#issueType').val();
+    const nameSearch = $('#nameSearch').val();
+
+    const search = new DoctorData(issueType, nameSearch);
+    const doctorData = search.getData();
+
+    doctorData.then(function(response) {
+      const doctorDataObject = JSON.parse(response);
+
+    $('.results').text(`${this.issueType} ${this.nameSearch}`);
+
+  }, function(error) {
+    $('.showErrors').text(`There was an error processing your request: ${error.message}`);
+
+    });
+  });
+
+
+
+});
