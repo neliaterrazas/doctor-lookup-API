@@ -1,15 +1,13 @@
-
 const path = require('path');
-const Dotenv = require('dotenv-weback');
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
-const CleanWebpackPlugin = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-
+const CleanWebpackPlugin = require('clean-webpack-plugin');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const Dotenv = require('dotenv-webpack');
 
 module.exports = {
   entry: './src/index.js',
   output: {
-    filename: 'main.js',
+    filename: 'bundle.js',
     path: path.resolve(__dirname, 'dist')
   },
   devtool: 'eval-source-map',
@@ -18,26 +16,31 @@ module.exports = {
   },
   plugins: [
     new UglifyJsPlugin({ sourceMap: true }),
-    new CleanWebpackPlugin(['dist']),
-    new Dotenv(),
     new HtmlWebpackPlugin({
-      inject: 'body',
+      title: 'Weather',
       template: './src/index.html',
-      filename: 'index.html'
-    })
+      inject: 'body'
+    }),
+    new CleanWebpackPlugin(['dist']),
+    new Dotenv()
+
   ],
   module: {
     rules: [
       {
-        test: /\.css$/,
+        test: /\.scss$/,
         use: [
           'style-loader',
-          'css-loader'
+          'css-loader',
+          'sass-loader'
         ]
       },
       {
         test: /\.js$/,
-        exclude: /node_modules/,
+        exclude: [
+          /node_modules/,
+          /spec/
+        ],
         loader: "eslint-loader"
       },
       {
