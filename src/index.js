@@ -5,17 +5,27 @@ import $ from 'jquery';
 $(document).ready(function() {
   $('.userForm').submit(function(event) {
     event.preventDefault();
+    const nameSearch = $('#name').val();
+    const condition = $('#condition').val();
 
-    const issueType = $('#issueType').val();
-    const nameSearch = $('#nameSearch').val();
+    const searchResults = new DoctorData(nameSearch, condition);
+    console.log(searchResults);
 
-    const search = new DoctorData(issueType, nameSearch);
-    const doctorData = search.getData();
 
-    doctorData.then(function(response) {
+    const names= searchResults.getName();
+    console.log(names);
+
+    names.then(function(response) {
+
       const doctorDataObject = JSON.parse(response);
 
-    $('.results').text(`${this.issueType} ${this.nameSearch}`);
+    $('.results').text(" ");
+    doctorDataObject.results.forEach(function(doctor){
+      $('.results').append(`
+        <div id="${this.nameSearch}" class="user">
+
+        </div>`);
+    });
 
   }, function(error) {
     $('.showErrors').text(`There was an error processing your request: ${error.message}`);
