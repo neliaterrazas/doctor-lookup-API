@@ -1,22 +1,17 @@
 export class DoctorData {
-  constructor(nameSearch, condition){
-    this.nameSearch = nameSearch;
-    this.condition = condition;
-  }
-  getName(){
-    let Promise = require('es6-promise').Promises;
-    return new Promise((resolve,reject)=>{
-      const myRequest = new XMLHttpRequest();
-      const url = `https://api.betterdoctor.com/2016-03-01/doctors?name=${this.nameSearch}&query=${this.condition}&location=37.773%2C-122.413%2C100&user_location=37.773%2C-122.413&skip=0&limit=100&user_key=${process.env.exports.apiKey}`;
-      myRequest.onload = function(){
+  getName(nameSearch, condition){
+    return new Promise(function(resolve,reject){
+      const request = new XMLHttpRequest();
+      const url = `https://api.betterdoctor.com/2016-03-01/doctors?name=${nameSearch}&query=${condition}&location=37.773%2C-122.413%2C10&user_location=37.773%2C-122.413&skip=0&limit=10&user_key=${process.env.exports.apiKey}`;
+      request.onload = function(){
         if(this.status===200){
-          resolve(myRequest.response)
+          resolve(request.response)
         }else {
-          reject(console.log("error!"))
+          reject(Error("error!"));
         }
       }
-      myRequest.open("GET",url,true);
-      myRequest.send();
+      request.open("GET",url,true);
+      request.send();
     });
   }
 }

@@ -8,31 +8,23 @@ $(document).ready(function() {
     const nameSearch = $('#name').val();
     const condition = $('#condition').val();
 
-    const searchResults = new DoctorData(nameSearch, condition);
-    console.log(searchResults);
+    const doctorData = new DoctorData();
+
+    const promise = doctorData.getName(nameSearch, condition);
 
 
-    const names= searchResults.getName();
-    console.log(names);
+    promise.then(function(response) {
+      const body = JSON.parse(response);
+      body.data.forEach(doctor =>{
+        const name = doctor.profile.first_name + " " + doctor.profile.last_name;
+        //define consts for missing info and then create a new class 
+        console.log(name);
+        $('.results').text(name);
 
-    names.then(function(response) {
 
-      const doctorDataObject = JSON.parse(response);
-
-    $('.results').text(" ");
-    doctorDataObject.results.forEach(function(doctor){
-      $('.results').append(`
-        <div id="${this.nameSearch}" class="user">
-
-        </div>`);
+      }, function(error) {
+      $('.showErrors').text(`There was an error processing your request: ${error.message}`);
+      });
     });
-
-  }, function(error) {
-    $('.showErrors').text(`There was an error processing your request: ${error.message}`);
-
     });
   });
-
-
-
-});
