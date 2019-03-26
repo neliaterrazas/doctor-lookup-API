@@ -7,6 +7,7 @@ $(document).ready(function() {
     event.preventDefault();
     const nameSearch = $('#name').val();
     const condition = $('#condition').val();
+    
 
     const doctorData = new DoctorData();
 
@@ -15,11 +16,21 @@ $(document).ready(function() {
 
     promise.then(function(response) {
       const body = JSON.parse(response);
+      console.log(body);
       body.data.forEach(doctor =>{
         const name = doctor.profile.first_name + " " + doctor.profile.last_name;
-        //define consts for missing info and then create a new class 
+        const address = doctor.practices[0].visit_address.street + ", " + doctor.practices[0].visit_address.street2 + ", " + doctor.practices[0].visit_address.city + ", " + doctor.practices[0].visit_address.state;
+        const phone = doctor.practices[0].phones[0].number;
+        const website = doctor.practices[0].website;
+        const accepting = doctor.practices[0].accepts_new_patients;
+
+        console.log(address);
+        console.log(accepting);
+        console.log(phone);
+        console.log(website);
         console.log(name);
         $('.results').text(name);
+        // $('.results').append(street);
 
 
       }, function(error) {
