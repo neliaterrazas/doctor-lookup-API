@@ -7,7 +7,7 @@ $(document).ready(function() {
     event.preventDefault();
     const nameSearch = $('#name').val();
     const condition = $('#condition').val();
-    
+
 
     const doctorData = new DoctorData();
 
@@ -29,8 +29,17 @@ $(document).ready(function() {
         console.log(phone);
         console.log(website);
         console.log(name);
-        $('.results').text(name);
-        // $('.results').append(street);
+
+        $('.name').text("Full name: " + name);
+        $('.address').text("Address: " + address);
+        $('.phone').text("Phone: " + phone);
+        $('.website').text("Website: " + website);
+        $('.accepting').text("Accepting new patients? " + accepting);
+
+
+
+
+
 
 
       }, function(error) {
