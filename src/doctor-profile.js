@@ -6,8 +6,14 @@ export class DoctorCard {
     this.website = website;
     this.accepting = accepting;
   }
-  organizeData(){
-    //continue with doctor-profile or explore template literals
+   organizeData(){
+    return '<div class=newDoctor>'+
+           '<p class=\'name\'> Doctors name: ' + this.name + '</p>'+
+           '<p class=\'address\'> Address: ' + this.address + '</p>'+
+           '<p class=\'address\'> Phone Number: ' + this.phone + '</p>'+
+           '<p class=\'website\'> Website: ' + this.website + '</p>'+
+           '<p class=\'accepting\'> Are they accepting new patients?: ' + this.accepting + '</p>'+
+       '</div>';
   }
 
 
